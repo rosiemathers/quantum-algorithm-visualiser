@@ -1,17 +1,32 @@
 from quantum import QuantumState, h_gate
 
-qubit = QuantumState.zero()
+def main():
+    qubit = QuantumState.zero()
 
-print("Initial state:")
-print(qubit.state)
+    print("=== Quantum Algorithm Visualiser ===\n")
 
-qubit.apply(h_gate())
+    print("Initial state:")
+    print(qubit.state)
 
-print("After Hadamard:")
-print(qubit.state)
+    qubit.apply(h_gate())
 
-print("Probabilities:")
-print(qubit.probabilities())
+    print("\nAfter Hadamard gate:")
+    print(qubit.state)
 
-print("Measurement:")
-print(qubit.measure())
+    print("\nMeasurement probabilities:")
+    probabilities = qubit.probabilities()
+
+    for i, probability in enumerate(probabilities):
+        print(f"|{i}>: {probability:.2%}")
+
+    print("\nMeasurement:")
+    result = qubit.measure()
+    print(f"Measured state: |{result}>")
+    print("\nRunning 1000 measurements...")
+    results = [qubit.measure() for _ in range(1000)]
+    print(f"|0> measured: {results.count(0)} times")
+    print(f"|1> measured: {results.count(1)} times")
+
+
+if __name__ == "__main__":
+    main()
